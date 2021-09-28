@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: l4mb0-kafka-producer-consumer
+  labels:
+    app: l4mb0-kafka-producer-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: l4mb0-kafka-producer-consumer
+  template:
+    metadata:
+      labels:
+        app: l4mb0-kafka-producer-consumer
+    spec:
+      containers:
+        - name: producer-consumer
+          image: gcr.io/secteam/l4mb0-kafka-producer-consumer:v1
+          tty: true
+          env:
+            - name: KAFKA_TOPIC
+              value: "messages"
+            - name: KAFKA_ADDR
+              value: "kafka.kafka:9092"
+            - name: CONSUMER_GROUP
+              value: "securecode"
